@@ -1,3 +1,7 @@
+function getMonthLabel(year, month1To12) {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return `${monthNames[month1To12 - 1]} ${year}`;
+}
 export function generateMonthGrid(year, month1To12, weekStart) {
     // return array of 42 'YYYY-MM-DD'
     const firstOfMonth = new Date(year, month1To12 - 1, 1);
@@ -40,11 +44,23 @@ function getWeekdayAbbrev(dateStr) {
 }
 export function renderMonthGrid(year, month1To12, weekStart = "Mon") {
     const dates = generateMonthGrid(year, month1To12, weekStart);
-    let html = '<div class="calendar-grid">\n';
+    let html = "";
+    html += `<div class="calendar-header">${getMonthLabel(year, month1To12)}</div>\n`;
+    // Weekday header above the grid
+    const labelsSunFirst = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const labels = weekStart === "Sun"
+        ? labelsSunFirst
+        : [...labelsSunFirst.slice(1), labelsSunFirst[0]];
+    html += '<div class="calendar-weekdays">\n';
+    for (const label of labels) {
+        html += `  <div class="weekday-cell">${label}</div>\n`;
+    }
+    html += "</div>\n";
+    // 7x6 date grid
+    html += '<div class="calendar-grid">\n';
     for (const date of dates) {
         const isOutsideMonth = !isDateInMonth(date, year, month1To12);
         const dayNumber = date.split("-")[2];
-        const weekday = getWeekdayAbbrev(date);
         const cellClass = isOutsideMonth
             ? "calendar-cell outside-month"
             : "calendar-cell";

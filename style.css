@@ -64,6 +64,40 @@ body {
   overflow: hidden;
 }
 
+.calendar-header {
+  padding: 6px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #180909;
+  text-align: center;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  color: #180909;
+}
+
+.weekday-cell {
+  padding: 6px;
+  font-size: 15px;
+  color: var(--muted);
+  text-align: left;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.weekday-cell:last-child {
+  border-right: none;
+}
+
+.weekday-cell:first-child {
+  border-left: none;
+}
+
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
