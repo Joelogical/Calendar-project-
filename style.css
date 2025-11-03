@@ -101,6 +101,14 @@ body {
   opacity: 0.6;
 }
 
+/* was used for the weekday label, but we don't need it anymore */
+/* .cell-header .weekday {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  color: #111;
+} */ 
+
 .chips {
   display: flex;
   flex-direction: column;

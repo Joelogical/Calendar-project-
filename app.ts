@@ -42,6 +42,17 @@ function isDateInMonth(
   return y === year && m === month1To12;
 }
 
+function getWeekdayAbbrev(dateStr: string): string {
+  // Parse dateStr 'YYYY-MM-DD' into a Date object
+  const parts = dateStr.split("-");
+  const y = Number(parts[0]);
+  const m = Number(parts[1]);
+  const d = Number(parts[2]);
+  const date = new Date(y, m - 1, d);
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return dayNames[date.getDay()] ?? "Sun";
+}
+
 export function renderMonthGrid(
   year: number,
   month1To12: number,
@@ -53,6 +64,7 @@ export function renderMonthGrid(
   for (const date of dates) {
     const isOutsideMonth = !isDateInMonth(date, year, month1To12);
     const dayNumber = date.split("-")[2];
+    const weekday = getWeekdayAbbrev(date);
     const cellClass = isOutsideMonth
       ? "calendar-cell outside-month"
       : "calendar-cell";
