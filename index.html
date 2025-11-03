@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Minimal inline styles so you can see structure before adding CSS */
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        margin: 0;
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .calendar {
+        border: 1px solid #180909;
+        min-height: 200px;
+        padding: 8px;
+      }
+      .events {
+        border: 1px solid #180909;
+        min-height: 120px;
+        padding: 8px;
+      }
+      .hint {
+        color: #555;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Calendar</h1>
+        <div>
+          <button id="prevBtn" type="button">Prev</button>
+          <span id="currentLabel" aria-live="polite"></span>
+          <button id="nextBtn" type="button">Next</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="calendar"></div>
+        <div class="events"></div>
+        <p class="hint">
+          Open DevTools Console. Try:
+          <code>generateMonthGrid(2025, 3, 'Mon')</code>
+        </p>
+      </div>
+    </div>
+
+    <!-- Load compiled JS (you'll run tsc to generate app.js) -->
+    <script type="module" src="app.js"></script>
+    <!-- Re-export function to the window for easy console access -->
+    <script type="module">
+      import { generateMonthGrid, renderMonthGrid } from "./app.js";
+      // @ts-ignore - this is plain JS in the browser
+      window.generateMonthGrid = generateMonthGrid;
+
+      // Get references to DOM elements
+      const label = document.getElementById("currentLabel");
+      const prev = document.getElementById("prevBtn");
+      const next = document.getElementById("nextBtn");
+      const calendarDiv = document.querySelector(".calendar");
+
+      // Track current year and month
+      let ym = { y: new Date().getFullYear(), m: new Date().getMonth() + 1 };
+
+      // Function to update the month/year label
+      function renderLabel() {
+        label.textContent = `${ym.y}-${String(ym.m).padStart(2, "0")}`;
+      }
+
+      // Function to render the calendar grid
+      function renderCalendar() {
+        if (calendarDiv) {
+          // Call renderMonthGrid with current year, month, and weekStart
+          const html = renderMonthGrid(ym.y, ym.m, "Sun");
+          calendarDiv.innerHTML = html;
+        }
+      }
+
+      // Update both label and calendar when month changes
+      function updateCalendar() {
+        renderLabel();
+        renderCalendar();
+      }
+
+      // Set up button event listeners
+      prev?.addEventListener("click", () => {
+        ym.m--;
+        if (ym.m === 0) {
+          ym.m = 12;
+          ym.y--;
+        }
+        updateCalendar();
+      });
+
+      next?.addEventListener("click", () => {
+        ym.m++;
+        if (ym.m === 13) {
+          ym.m = 1;
+          ym.y++;
+        }
+        updateCalendar();
+      });
+
+      // Initial render when page loads
+      updateCalendar();
+    </script>
+  </body>
+</html>

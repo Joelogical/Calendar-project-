@@ -1,0 +1,17 @@
+{
+  "name": "calendar-project-",
+  "version": "1.0.0",
+  "description": "Building a calendar from scratch. Learning the basics of building a dynamic event calendar.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "npm run build && echo \"Opening calendar in browser...\" && echo \"Note: For best experience, serve with a local server like 'npx serve' or 'python -m http.server'\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
