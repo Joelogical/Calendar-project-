@@ -1,5 +1,18 @@
 function getMonthLabel(year, month1To12) {
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
     return `${monthNames[month1To12 - 1]} ${year}`;
 }
 export function generateMonthGrid(year, month1To12, weekStart) {
@@ -42,12 +55,20 @@ function getWeekdayAbbrev(dateStr) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return dayNames[date.getDay()] ?? "Sun";
 }
-export function renderMonthGrid(year, month1To12, weekStart = "Mon") {
+export function renderMonthGrid(year, month1To12, weekStart = "Mon", events = {}) {
     const dates = generateMonthGrid(year, month1To12, weekStart);
     let html = "";
     html += `<div class="calendar-header">${getMonthLabel(year, month1To12)}</div>\n`;
     // Weekday header above the grid
-    const labelsSunFirst = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const labelsSunFirst = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+    ];
     const labels = weekStart === "Sun"
         ? labelsSunFirst
         : [...labelsSunFirst.slice(1), labelsSunFirst[0]];
@@ -68,7 +89,14 @@ export function renderMonthGrid(year, month1To12, weekStart = "Mon") {
         html += `    <div class="cell-header">\n`;
         html += `      <span class="date">${dayNumber}</span>\n`;
         html += `    </div>\n`;
-        html += `    <div class="chips"></div>\n`;
+        html += `    <div class="chips">\n`;
+        // Check if this date has events and display them
+        if (events[date] && events[date].length > 0) {
+            for (const eventName of events[date]) {
+                html += `      <div class="chip">${eventName}</div>\n`;
+            }
+        }
+        html += `    </div>\n`;
         html += `  </div>\n`;
     }
     html += "</div>";

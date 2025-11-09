@@ -51,10 +51,61 @@ body {
   background: #f9fafb;
 }
 
+.calendar-switcher {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 4px;
+}
+
+.calendar-switcher.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.calendar-switcher:hover:not(.active) {
+  background: #f9fafb;
+  color: #180909;
+  border-color: #180909;
+}
+
 .content {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 16px;
+}
+
+.calendar {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.event-details {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.events {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar,
+  .event-details,
+  .events {
+    grid-column: 1;
+    grid-row: auto;
+  }
 }
 
 /* Calendar grid (7 columns x 6 rows) */
@@ -96,7 +147,6 @@ body {
 .weekday-cell:first-child {
   border-left: none;
 }
-
 
 .calendar-grid {
   display: grid;
@@ -141,7 +191,7 @@ body {
   color: var(--muted);
   font-weight: 600;
   color: #111;
-} */ 
+} */
 
 .chips {
   display: flex;
@@ -171,8 +221,75 @@ body {
 .events {
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 8px;
+  padding: 16px;
   min-height: 120px;
+}
+
+/* Event Details panel */
+.event-details {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 200px;
+  background: #fff;
+}
+
+.event-details h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.no-selection {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.events h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#addEventForm button {
+  padding: 8px 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#addEventForm button:hover {
+  background: #1d4ed8;
 }
 
 /* Responsive tweaks */
