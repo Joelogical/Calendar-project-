@@ -80,7 +80,7 @@ export function renderMonthGrid(
   const dates = generateMonthGrid(year, month1To12, weekStart);
   let html = "";
 
-  html += `<div class="calendar-header">${getMonthLabel(
+  html += `<div class="month-header">${getMonthLabel(
     year,
     month1To12
   )}</div>\n`;
